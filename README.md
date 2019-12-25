@@ -6,7 +6,7 @@ ___
 - Your combo list must have followed this pattern:
  `email:password`
 - In 5th line of **nordvpn-checker.py** file you just need to replace your email-pass file path to the **open()** function:
- `handle = open('your-email-pass-file.txt')`
+ `open('your-email-pass-file.txt')`
 - At last just run the code:
     `$ python3 nord-checker.py`
     
