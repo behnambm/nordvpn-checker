@@ -5,13 +5,11 @@ ___
 - [How to install NordVPN on your system](https://nordvpn.com/download/linux/)
 - Your combo list must have followed this pattern:
  `email:password`
-- In 5th line of **nordvpn-checker.py** file you just need to put your own email-pass file path in the **open()** function:
- `open('your-email-pass-file.txt')`
-- At last just run the code:
-    `$ python3 nord-checker.py`
+- Use : `$ python3 nord-checker.py -f combo.txt` Or `$ python3 nord-checker.py --file combo.txt`
     
 ## TODO 
-- [ ] make a better REAMDME.md file with a better English :)
+- [ ] Make a better REAMDME.md file with a better English :)
+- [ ] Taking an argument to save the success accounts in specified file
 
 ## Contact 
 
