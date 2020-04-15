@@ -1,5 +1,6 @@
 # nordvpn-checker
-A simple script to check NordVpn accounts.(Only in linux) 
+A simple script to check NordVpn accounts.
+#### NOTE : This script works only in linux.
 ___
 #### You should have NordVpn installed to check your combo list:
 - [How to install NordVPN on your system](https://nordvpn.com/download/linux/)
