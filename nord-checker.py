@@ -26,7 +26,11 @@ if  first_arg in ('-f','--file'):
 
 count = 0 
 if handle:
-    subprocess.check_output(['nordvpn','logout'])
+    try:
+        first_logout = subprocess.check_output(['nordvpn','logout'])
+    except:
+        pass
+    
     for line in handle:
         count += 1
         user , pas = line.strip().split(':')    # your combo file must be separated by colon : 
