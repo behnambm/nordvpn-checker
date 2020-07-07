@@ -8,7 +8,7 @@ ___
  `email:password`
 - Use : `$ python3 nord-checker.py -f combo.txt` Or `$ python3 nord-checker.py --file combo.txt`
     
-## TODO 
+### TODO 
 - [ ] Make a better REAMDME.md file with a better English :)
 - [ ] Taking an argument to save the success accounts in specified file
 
