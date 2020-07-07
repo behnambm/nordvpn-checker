@@ -13,7 +13,6 @@ ___
 - [ ] Taking an argument to save the success accounts in specified file
 
 ### Contact 
-
 - [My Telgram](https://t.me/behnam_1121)
 - [My Instagram](https://www.instagram.com/behnam.mohamadzadeh)
 - [Email](mailto:behnam.mohamadzadeh21@gmail.com)
