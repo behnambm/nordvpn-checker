@@ -49,7 +49,7 @@ if handle:
         else:
             print(str(count)+'- '+user+':'+pas+'\t'+str(info)+'\n')
 
-        if count == 50: # you can change the count but almost after 50 try your IP will ban from Nord servers
+        if count == 50: # you can change the count but almost after 50 try your IP will ban from Nordvpn servers
             handle.close()
             print(f"We have reached to {count} login")
             exit()
