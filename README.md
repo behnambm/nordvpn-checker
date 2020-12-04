@@ -14,6 +14,3 @@ ___
 
 ### Contact 
 - [My Telgram](https://t.me/behnam_1121)
-- [My Instagram](https://www.instagram.com/behnam.mohamadzadeh)
-- [Email](mailto:behnam.mohamadzadeh21@gmail.com)
-
