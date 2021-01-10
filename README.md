@@ -19,7 +19,7 @@ A simple Python script to check if NordVPN accounts listed in a file are valid.
 - The syntax is
   > `nord-checker.py [--file | -f] path/to/file [--output | -o] path/to/file`
 
-For example, `cd` into the recently clone directory and run,
+For example, `cd` into the recently cloned directory and run:
 
 ```
 $ python3 nord-checker.py --file accounts.txt --output success.txt
