@@ -20,7 +20,7 @@ def read_arguments():
     parser.add_argument(
         '-f',
         '--file',
-        help='The file that contains your email:pass entries',
+        help='The file that contains your email:password entries',
         action='store',
         required=True,
         metavar='FILE'
@@ -29,7 +29,7 @@ def read_arguments():
     parser.add_argument(
         '-o',
         '--output',
-        help='The file to output the successful email:pass entries to',
+        help='The file to output the successful email:password entries to',
         action='store',
         required=True,
         metavar='FILE'
