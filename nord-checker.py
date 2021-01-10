@@ -88,7 +88,7 @@ def read_file(args):
                 continue
 
             email, password = line.strip().split(':')
-            print(B + f'{count} Checking ➜', W +
+            print(B + f'{count}) Checking ➜', W +
                   f'{email}:{password}\r' + E, end='')
 
             login_result = check_login(email, password)
