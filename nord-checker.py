@@ -2,6 +2,7 @@ import os
 import subprocess
 import sys
 import argparse
+from typing import Union
 
 # console colors
 G = '\033[92m'  # Green
@@ -38,7 +39,7 @@ def read_arguments():
     return parser.parse_args()
 
 
-def check_login(email, password):
+def check_login(email: str, password: str) -> Union['False', None, str]:
     # make sure you're logged out of NordVPN
     subprocess.run(['nordvpn', 'logout'], capture_output=True)
 
@@ -63,12 +64,12 @@ def check_login(email, password):
             return account_info.stdout
 
 
-def parse_expiration_date(login_result):
+def parse_expiration_date(login_result: str) -> str:
     return login_result.split('VPN Service: ')[
         1].rstrip()
 
 
-def read_file(args):
+def read_file(args) -> None:
     input_file_path = args.file
     output_file_path = args.output
 
@@ -124,7 +125,7 @@ def read_file(args):
 
 
 # Appends username:password entry to the specified output file
-def append_to_output_file(file_path, entry):
+def append_to_output_file(file_path: str, entry: str) -> None:
     with open(file_path, "a") as output_file:
         output_file.write(entry + "\r\n")
 
