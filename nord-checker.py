@@ -82,10 +82,12 @@ def read_file(args):
         sys.exit()
 
     with open(input_file_path) as f:
-        for count, line in enumerate(f):
-            count += 1
+        count = 0
+        for line in f:
             if not line.strip():  # ignore empty lines in file
                 continue
+
+            count += 1
 
             email, password = line.strip().split(':')
             print(B + f'{count}) Checking ➜', W +
