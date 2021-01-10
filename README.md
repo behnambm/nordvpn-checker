@@ -1,16 +1,37 @@
 # nordvpn-checker
-A simple script to check NordVpn accounts.
-#### NOTE : This script works only in linux.
-___
-#### You should have NordVpn installed to check your combo list:
-- [How to install NordVPN on your system](https://nordvpn.com/download/linux/)
-- Your combo list must followed this pattern:
- `email:password`
-- Use : `$ python3 nord-checker.py -f combo.txt` Or `$ python3 nord-checker.py --file combo.txt`
-    
-### TODO 
-- [ ] Make a better REAMDME.md file with a better English :)
-- [ ] Taking an argument to save the success accounts in specified file
 
-### Contact 
+A simple Python script to check if NordVPN accounts listed in a file are valid.
+
+## NOTE: This script only works in Linux.
+
+# Requirements
+
+- The NordVPN CLI tool. [Get it from here](https://nordvpn.com/download/linux/).
+- [Python 3](https://www.python.org/downloads/).
+- An input file containing NordVPN login entries in `email:password` format.
+
+# Installation
+
+- Clone the repo with `git clone https://github.com/behnambm/nordvpn-checker`
+
+# Usage
+
+- The syntax is
+  > `nord-checker.py [--file | -f] path/to/file [--output | -o] path/to/file`
+
+For example, `cd` into the recently cloned directory and run:
+
+```
+$ python3 nord-checker.py --file accounts.txt --output success.txt
+```
+
+- The successful entries are appended to the specified output file.
+
+### TODO
+
+- [ ] Make a better README.md file with better English. :)
+- [x] Taking a second argument to save the successful login entries in an specified file.
+
+### Contact
+
 - [My Telgram](https://t.me/behnam_1121)
