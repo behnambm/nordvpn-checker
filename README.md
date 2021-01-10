@@ -27,10 +27,6 @@ $ python3 nord-checker.py --file accounts.txt --output success.txt
 
 - The successful entries are appended to the specified output file.
 
-### TODO
-
-- [ ] Make a better README.md file with better English. :)
-- [x] Taking a second argument to save the successful login entries in an specified file.
 
 ### Contact
 
