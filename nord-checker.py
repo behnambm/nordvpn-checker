@@ -90,7 +90,7 @@ def read_file(args) -> None:
 
             count += 1
 
-            email, password = line.strip().split(':')
+            email, password = line.strip().split(':')[:2]
             print(B + f'{count}) Checking ➜', W +
                   f'{email}:{password}\r' + E, end='')
 
