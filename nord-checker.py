@@ -44,10 +44,11 @@ def check_login(email: str, password: str) -> Union['False', None, str]:
     subprocess.run(['nordvpn', 'logout'], capture_output=True)
 
     login_result = subprocess.run(
-        ['nordvpn', 'login', '-u', email, '-p', password],
+        ['nordvpn', 'login', '--username', email, '--password', password],
         capture_output=True,
         text=True
     )
+
     if not login_result.returncode == 0:
         # Failed to login
         return False
