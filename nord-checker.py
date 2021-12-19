@@ -115,6 +115,16 @@ def read_file(args) -> None:
                 )
                 print(
                     R+"NordVPN might be temporarily blocking your IP due to too many requests."+E)
+            elif login_result.find("having trouble reaching our servers") == -1:
+                # No response from NordVPN
+                print(
+                    B + f'{count}) Checking ➜',
+                    W + f'{email}:{password}',
+                    '\t\t\t',
+                    R + 'No response' + E
+                )
+                print(
+                    R+"NordVPN might be temporarily blocking your IP due to too many requests."+E)
             else:
                 account_expiration_date = parse_expiration_date(login_result)
                 print(

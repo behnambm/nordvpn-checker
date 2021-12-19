@@ -1,6 +1,7 @@
 # ignore test files
 accounts.txt
 success.txt
+*.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
