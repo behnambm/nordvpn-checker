@@ -7,7 +7,7 @@ A simple Python script to check if NordVPN accounts listed in a file are valid.
 # Requirements
 
 - The NordVPN CLI tool. [Get it from here](https://nordvpn.com/download/linux/).
-- [Python 3](https://www.python.org/downloads/).
+- [Python 3.7](https://www.python.org/downloads/).
 - An input file containing NordVPN login entries in `email:password` format.
 
 # Installation

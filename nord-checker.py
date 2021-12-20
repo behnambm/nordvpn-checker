@@ -44,10 +44,11 @@ def check_login(email: str, password: str) -> Union['False', None, str]:
     subprocess.run(['nordvpn', 'logout'], capture_output=True)
 
     login_result = subprocess.run(
-        ['nordvpn', 'login', '-u', email, '-p', password],
+        ['nordvpn', 'login', '--username', email, '--password', password],
         capture_output=True,
         text=True
     )
+
     if not login_result.returncode == 0:
         # Failed to login
         return False
@@ -105,6 +106,16 @@ def read_file(args) -> None:
                     R + 'Failed' + E
                 )
             elif login_result is None:
+                # No response from NordVPN
+                print(
+                    B + f'{count}) Checking ➜',
+                    W + f'{email}:{password}',
+                    '\t\t\t',
+                    R + 'No response' + E
+                )
+                print(
+                    R+"NordVPN might be temporarily blocking your IP due to too many requests."+E)
+            elif login_result.find("having trouble reaching our servers") == -1:
                 # No response from NordVPN
                 print(
                     B + f'{count}) Checking ➜',
