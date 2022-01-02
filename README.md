@@ -2,7 +2,7 @@
 
 A simple Python script to check if NordVPN accounts listed in a file are valid.
 
-## NOTE: This script only works in Linux.
+### NOTE: This script only works in Linux.
 
 # Requirements
 
@@ -18,7 +18,7 @@ A simple Python script to check if NordVPN accounts listed in a file are valid.
 The Uncompromising Code Formatter [Black](https://github.com/psf/black5)
 
 ```
-black -t py38 nord-checker.py
+$ black -t py38 nord-checker.py
 ```
 
 # Usage
@@ -26,6 +26,14 @@ black -t py38 nord-checker.py
 - The syntax is
   > `nord-checker.py [--file | -f] path/to/file [--output | -o] path/to/file [--connect | -c] [--delete | -d]`
 
+- Arguments
+```
+  -f FILE, --file FILE  The file that contains your email:password entries
+  -o FILE, --output FILE
+                        The file to output the successful email:password entries to
+  -c, --connect         login & connect
+  -d, --delete          remove faulty password lines in input-file
+```
 For example, `cd` into the recently cloned directory and run:
 
 ```
@@ -41,10 +49,10 @@ $ python nord-checker.py --file succes.txt --output /dev/null -c
 
 
 - Unique successful entries are appended to the specified output file.
-- The faulty entries will be removed from the input_file (requires sed)
+- Wrong password entries can be removed from the input_file with the `-d` argument
 
 # Best Practice
-Have your router connected to NordVPN. After 50 attempts you will get blocked.
+Have your router connected to NordVPN. After 50 attempts you will get blocked (The scripts halts after 50)
 Then change your NVPN server and you are good to go again.
 
 # Ideas
@@ -56,4 +64,4 @@ Then change your NVPN server and you are good to go again.
 ### Contact
 
 - [My Telgram](https://t.me/behnam_1121)
-- volunteer [Xilinxx](https://t.me/xilinxx)
+- volunteer [Telegram Xilinxx](https://t.me/xilinxx)
