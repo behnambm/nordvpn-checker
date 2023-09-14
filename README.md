@@ -63,5 +63,4 @@ Then change your NVPN server and you are good to go again.
 
 ### Contact
 
-- [My Telgram](https://t.me/behnam_1121)
 - volunteer [Telegram Xilinxx](https://t.me/xilinxx)
