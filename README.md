@@ -2,6 +2,12 @@
 
 A simple Python script to check if NordVPN accounts listed in a file are valid.
 
+### NOTE: This script is no longer functional!
+
+Since April 2022, Nordvpn is using `nordvpn login --token "tokencode"` , this scripts uses the user-name = deprecated..  
+_See_   
+* https://support.nordvpn.com/Connectivity/Linux/2010688322/How-to-log-in-to-NordVPN-on-Linux-devices-without-a-GUI.htm
+
 ### NOTE: This script only works in Linux.
 
 # Requirements
